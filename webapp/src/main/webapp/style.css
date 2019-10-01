@@ -1,0 +1,33 @@
+body {
+    margin: 0;
+    background: #00ffff;
+}
+.header {
+    height: 100px;
+    background: #abeafa;
+    text-align: center;
+    padding-top: 20px;
+}
+.container {
+    width: 1170px;
+    margin: 0 auto;
+}
+.menu {
+    width: 20%;
+    padding-bottom: 10px;
+    padding-left: 10px;
+    background:#ddee77 ;
+}
+.page {
+    background: bisque;
+    text-align: center;
+    width: 80%;
+
+}
+.content {
+
+    height: 600px;
+    display: flex;
+    justify-content: space-between;
+
+}
