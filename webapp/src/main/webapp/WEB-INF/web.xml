@@ -10,7 +10,7 @@
   <display-name>Archetype Created Web Application</display-name>
   <servlet>
     <servlet-name>ErrorHandler</servlet-name>
-    <servlet-class>ru.mikovic.servlet.ErrorHandler</servlet-class>
+    <servlet-class>com.minakov.servlet.ErrorHandler</servlet-class>
   </servlet>
   <!-- servlet mappings -->
   <servlet-mapping>

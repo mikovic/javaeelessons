@@ -1,4 +1,4 @@
-package ru.mikovic.servlet;
+package com.minakov.servlet;
 
 import javax.servlet.Servlet;
 import javax.servlet.ServletException;
