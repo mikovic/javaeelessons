@@ -7,15 +7,17 @@ public class ToDo {
     private Long id;
 
     private String description;
-
+    private  int categoryId;
+    private String category;
     private LocalDate targetDate;
 
     public ToDo() {
     }
 
-    public ToDo(Long id, String description, LocalDate targetDate) {
+    public ToDo(Long id, String description, int categoryId, LocalDate targetDate) {
         this.id = id;
         this.description = description;
+        this.categoryId = categoryId;
         this.targetDate = targetDate;
     }
 
@@ -41,5 +43,21 @@ public class ToDo {
 
     public void setTargetDate(LocalDate targetDate) {
         this.targetDate = targetDate;
+    }
+
+    public int getCategoryId() {
+        return categoryId;
+    }
+
+    public void setCategoryId(int categoryId) {
+        this.categoryId = categoryId;
+    }
+
+    public String getCategory() {
+        return category;
+    }
+
+    public void setCategory(String category) {
+        this.category = category;
     }
 }
