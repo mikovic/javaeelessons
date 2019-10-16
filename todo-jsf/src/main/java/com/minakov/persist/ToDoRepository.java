@@ -23,7 +23,7 @@ public class ToDoRepository {
     @Inject
     private ServletContext sc;
 
-    private Connection conn;
+    public static Connection conn;
 
     @PostConstruct
     public void init() throws SQLException {
@@ -33,34 +33,40 @@ public class ToDoRepository {
 
         try {
             this.conn = DriverManager.getConnection(jdbcConnectionString, username, password);
+            createTableIfNotExists(conn);
+            createTableCatalogIfNotExists(conn);
+            fillTableCatalog(conn);
 
             if (this.findAll().isEmpty()) {
-                this.insert(new ToDo(-1L, "First", LocalDate.now()));
-                this.insert(new ToDo(-1L, "Second", LocalDate.now().plusDays(1)));
-                this.insert(new ToDo(-1L, "Third", LocalDate.now().plusDays(2)));
+
+                this.insert(new ToDo(-1L, "First",1, LocalDate.now()));
+                this.insert(new ToDo(-1L, "Second", 2, LocalDate.now().plusDays(1)));
+                this.insert(new ToDo(-1L, "Third",3, LocalDate.now().plusDays(2)));
             }
         } catch (SQLException ex) {
             logger.error("", ex);
         }
 
-        createTableIfNotExists(conn);
+
     }
 
     public void insert(ToDo toDo) throws SQLException {
         try (PreparedStatement stmt = conn.prepareStatement(
-                "insert into todos(description, targetDate) values (?, ?);")) {
+                "insert into todos(description, categoryId, targetDate) values (?, ?, ?)")) {
             stmt.setString(1, toDo.getDescription());
-            stmt.setDate(2, Date.valueOf(toDo.getTargetDate()), Calendar.getInstance());
+            stmt.setInt(2,toDo.getCategoryId());
+            stmt.setDate(3, Date.valueOf(toDo.getTargetDate()), Calendar.getInstance());
             stmt.execute();
         }
     }
 
     public void update(ToDo toDo) throws SQLException {
         try (PreparedStatement stmt = conn.prepareStatement(
-                "update todos set description = ?, targetDate = ? where id = ?;")) {
+                "update todos set description = ?, categoryId = ?, targetDate = ? where id = ?;")) {
             stmt.setString(1, toDo.getDescription());
-            stmt.setDate(2, Date.valueOf(toDo.getTargetDate()), Calendar.getInstance());
-            stmt.setLong(3, toDo.getId());
+            stmt.setInt(2,toDo.getCategoryId());
+            stmt.setDate(3, Date.valueOf(toDo.getTargetDate()), Calendar.getInstance());
+            stmt.setLong(4, toDo.getId());
             stmt.execute();
         }
     }
@@ -74,37 +80,120 @@ public class ToDoRepository {
     }
 
     public ToDo findById(long id) throws SQLException {
+        ToDo toDo = null;
         try (PreparedStatement stmt = conn.prepareStatement(
-                "select id, description, targetDate from todos where id = ?")) {
+                "select t.id, t.description, t.categoryId, t.targetDate,cat.category from todos t left join catalog cat on" +
+                        " t.id = ? and t.categoryId = cat.id")) {
             stmt.setLong(1, id);
             ResultSet rs = stmt.executeQuery();
 
             if (rs.next()) {
-                return new ToDo(rs.getLong(1), rs.getString(2), rs.getDate(3, Calendar.getInstance()).toLocalDate());
+                toDo =new ToDo(rs.getLong(1), rs.getString(2), rs.getInt(3) , rs.getDate(4, Calendar.getInstance()).toLocalDate());
+                toDo.setCategory(rs.getString(5));
+                return toDo;
             }
         }
-        return new ToDo(-1L, "", null);
+        return new ToDo(-1L, "",  0,null);
     }
+
+    public Category findToDos(Category category) throws SQLException {
+        int id = category.getId();
+        List<ToDo> list = new ArrayList<>();
+        ToDo toDo = null;
+        try (PreparedStatement stmt = conn.prepareStatement(
+                "select distinct t.id, t.description, t.categoryId, t.targetDate, cat.category from todos t left join catalog cat on" +
+                        " t.categoryId = cat.id where t.categoryId = ?")) {
+            stmt.setLong(1, id);
+            ResultSet rs = stmt.executeQuery();
+
+            while (rs.next()) {
+                toDo =new ToDo(rs.getLong(1), rs.getString(2), rs.getInt(3) , rs.getDate(4, Calendar.getInstance()).toLocalDate());
+                toDo.setCategory(rs.getString(5));
+              list.add(toDo);
+
+            }
+
+            for(ToDo t: list){
+                System.out.println("id TODO="+t.getId());
+                System.out.println("Category TODO="+t.getCategory());
+                System.out.println("DESCRIPTION= " + t.getDescription());
+                System.out.println(("___________________"));
+            }
+        }
+        category.setList(list);
+        return category;
+    }
+
+
 
     public List<ToDo> findAll() throws SQLException {
         List<ToDo> res = new ArrayList<>();
+        ToDo toDo = null;
         try (Statement stmt = conn.createStatement()) {
-            ResultSet rs = stmt.executeQuery("select id, description, targetDate from todos");
+            ResultSet rs = stmt.executeQuery("select t.id, t.description,  t.categoryId, t.targetDate, cat.category from todos t left join catalog cat on "+
+                    " t.categoryId = cat.id group by t.id" );
 
             while (rs.next()) {
-                res.add(new ToDo(rs.getLong(1), rs.getString(2), rs.getDate(3, Calendar.getInstance()).toLocalDate()));
+                toDo = new ToDo(rs.getLong(1), rs.getString(2), rs.getInt(3), rs.getDate(4, Calendar.getInstance()).toLocalDate());
+                toDo.setCategory(rs.getString(5));
+                res.add(toDo);
             }
         }
         return res;
     }
+
 
     private void createTableIfNotExists(Connection conn) throws SQLException {
         try (Statement stmt = conn.createStatement()) {
             stmt.execute("create table if not exists todos (\n" +
                     "\tid int auto_increment primary key,\n" +
                     "    description varchar(25),\n" +
+                    "    categoryId int,\n" +
                     "    targetDate date \n" +
                     ");");
         }
     }
+
+    private void createTableCatalogIfNotExists(Connection conn) throws SQLException {
+        try (Statement stmt = conn.createStatement()) {
+            stmt.execute("create table if not exists catalog (\n" +
+                    "\tid int auto_increment primary key,\n" +
+                    "    category varchar(25)\n" +
+
+                    ");");
+        }
+    }
+    private void fillTableCatalog(Connection conn) throws SQLException {
+
+        try (PreparedStatement stmt = conn.prepareStatement(
+                "insert into catalog(id, category) values (?,?)")) {
+            stmt.setInt(1,1 );
+            stmt.setString(2,"category1" );
+            stmt.execute();
+            stmt.setInt(1,2 );
+            stmt.setString(2,"category2");
+            stmt.execute();
+            stmt.setInt(1,3 );
+            stmt.setString(2,"category3");
+            stmt.execute();
+        }
+
+    }
+
+    public void addToBasket(Long id) {
+
+    }
+
+    public Connection getConn() {
+        return conn;
+    }
+
+    public void setConn(Connection conn) {
+        this.conn = conn;
+    }
 }
+
+
+
+
+

@@ -3,18 +3,18 @@
 
 <html lang="en">
 
-<%@ include file="/WEB-INF/templates/head.jsp" %>
+<%@ include file="/WEB-INF/head.jsp" %>
 
 <body>
 
-<%@ include file="/WEB-INF/templates/header.jsp" %>
+<%@ include file="/WEB-INF/header.jsp" %>
 
 <div class="container">
     <h3>Error ${pageContext.errorData.statusCode}</h3>
     <p><b>Request URI:</b> ${pageContext.request.scheme}://${header.host}${pageContext.errorData.requestURI}</p>
 </div>
 
-<%@ include file="/WEB-INF/templates/footer_scripts.jsp" %>
+<%@ include file="/WEB-INF/footer-scripts.jsp" %>
 
 </body>
 
