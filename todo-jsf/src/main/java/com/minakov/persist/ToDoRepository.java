@@ -23,7 +23,7 @@ public class ToDoRepository {
     @Inject
     private ServletContext sc;
 
-    private Connection conn;
+    public static Connection conn;
 
     @PostConstruct
     public void init() throws SQLException {
@@ -38,9 +38,10 @@ public class ToDoRepository {
             fillTableCatalog(conn);
 
             if (this.findAll().isEmpty()) {
+
                 this.insert(new ToDo(-1L, "First",1, LocalDate.now()));
-                this.insert(new ToDo(-1L, "Second", 1, LocalDate.now().plusDays(1)));
-                this.insert(new ToDo(-1L, "Third",1, LocalDate.now().plusDays(2)));
+                this.insert(new ToDo(-1L, "Second", 2, LocalDate.now().plusDays(1)));
+                this.insert(new ToDo(-1L, "Third",3, LocalDate.now().plusDays(2)));
             }
         } catch (SQLException ex) {
             logger.error("", ex);
@@ -95,6 +96,35 @@ public class ToDoRepository {
         return new ToDo(-1L, "",  0,null);
     }
 
+    public Category findToDos(Category category) throws SQLException {
+        int id = category.getId();
+        List<ToDo> list = new ArrayList<>();
+        ToDo toDo = null;
+        try (PreparedStatement stmt = conn.prepareStatement(
+                "select distinct t.id, t.description, t.categoryId, t.targetDate, cat.category from todos t left join catalog cat on" +
+                        " t.categoryId = cat.id where t.categoryId = ?")) {
+            stmt.setLong(1, id);
+            ResultSet rs = stmt.executeQuery();
+
+            while (rs.next()) {
+                toDo =new ToDo(rs.getLong(1), rs.getString(2), rs.getInt(3) , rs.getDate(4, Calendar.getInstance()).toLocalDate());
+                toDo.setCategory(rs.getString(5));
+              list.add(toDo);
+
+            }
+
+            for(ToDo t: list){
+                System.out.println("id TODO="+t.getId());
+                System.out.println("Category TODO="+t.getCategory());
+                System.out.println("DESCRIPTION= " + t.getDescription());
+                System.out.println(("___________________"));
+            }
+        }
+        category.setList(list);
+        return category;
+    }
+
+
 
     public List<ToDo> findAll() throws SQLException {
         List<ToDo> res = new ArrayList<>();
@@ -127,7 +157,7 @@ public class ToDoRepository {
     private void createTableCatalogIfNotExists(Connection conn) throws SQLException {
         try (Statement stmt = conn.createStatement()) {
             stmt.execute("create table if not exists catalog (\n" +
-                    "\tid int,\n" +
+                    "\tid int auto_increment primary key,\n" +
                     "    category varchar(25)\n" +
 
                     ");");
@@ -143,14 +173,23 @@ public class ToDoRepository {
             stmt.setInt(1,2 );
             stmt.setString(2,"category2");
             stmt.execute();
-            stmt.setInt(1,2 );
+            stmt.setInt(1,3 );
             stmt.setString(2,"category3");
+            stmt.execute();
         }
 
     }
 
     public void addToBasket(Long id) {
 
+    }
+
+    public Connection getConn() {
+        return conn;
+    }
+
+    public void setConn(Connection conn) {
+        this.conn = conn;
     }
 }
 

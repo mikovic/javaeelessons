@@ -1,11 +1,14 @@
 package com.minakov.persist;
 
+
+import javax.validation.constraints.NotNull;
+import javax.inject.Inject;
 import java.time.LocalDate;
 
 public class ToDo {
 
     private Long id;
-
+    @NotNull(message = "Поле не должно быть пустым")
     private String description;
     private  int categoryId;
     private String category;

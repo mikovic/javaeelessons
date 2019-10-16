@@ -16,7 +16,7 @@
 </h:head>
 
 <h:body>
-
+    <h:form >
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
         <a class="navbar-brand" href="#">ToDo</a>
 
@@ -28,12 +28,27 @@
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav mr-auto">
                 <li class="nav-item active">
-                    <a class="nav-link" href="#">List</a>
+                    <h:commandLink value="Home" styleClass="nav-link" action="#{todoBean.showIndex()}"/>
+
                 </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Catalog</a>
+                    <div class="dropdown-menu">
+
+
+                        <ui:repeat var="category" value="#{categoryBean.catalog.list}">
+
+                            <h:commandLink class="dropdown-item" action="#{todoBean.findToDos(category)}" value ="#{category.category}"/>
+
+                        </ui:repeat>
+
+                    </div>
+                </li>
+
             </ul>
         </div>
     </nav>
-
+    </h:form>
     <div class="container">
 
         <h:form id="todosForm">
