@@ -7,6 +7,8 @@ import javax.annotation.PostConstruct;
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
 import javax.servlet.ServletContext;
 import java.sql.*;
 import java.time.LocalDate;
@@ -18,41 +20,16 @@ import java.util.List;
 public class CategoryRepository {
 
     private static final Logger logger = LoggerFactory.getLogger(CategoryRepository.class);
-    @Inject
-    private ServletContext sc;
-    Connection conn;
+
+    @PersistenceContext(unitName = "ds")
+    private EntityManager em;
 
 
-    @PostConstruct
-    public void init() throws SQLException {
-        String jdbcConnectionString = sc.getInitParameter("jdbcConnectionString");
-        String username = sc.getInitParameter("username");
-        String password = sc.getInitParameter("password");
-
-        try {
-            this.conn = DriverManager.getConnection(jdbcConnectionString, username, password);
-
-        } catch (SQLException ex) {
-            logger.error("", ex);
-        }
-
-
+    public List<Category> findAll()  {
+        return em.createQuery("Category.findAll", Category.class).getResultList();
     }
 
-    public Catalog getCatalog() throws SQLException {
-        Catalog catalog = new Catalog();
-        Category category = null;
-        try (Statement stmt = conn.createStatement()) {
-            ResultSet rs = stmt.executeQuery("select cat.id, cat.category from catalog cat" );
-
-            while (rs.next()) {
-                category= new Category(rs.getInt(1), rs.getString(2));
-
-                catalog.addCategory(category);
-            }
-        }
-        return catalog;
+    public Category findById(int id) {
+        return em.createQuery("Category.findById", Category.class).setParameter("id", id).getSingleResult();
     }
-
-
 }

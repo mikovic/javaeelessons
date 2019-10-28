@@ -36,9 +36,9 @@
                     <div class="dropdown-menu">
 
 
-                        <ui:repeat var="category" value="#{categoryBean.catalog.list}">
+                        <ui:repeat var="category" value="#{categoryBean.findAll()}">
 
-                            <h:commandLink class="dropdown-item" action="#{todoBean.findToDos(category)}" value ="#{category.category}"/>
+                            <h:commandLink class="dropdown-item" action="#{categoryBean.findById(category.id)}" value ="#{category.category}"/>
 
                         </ui:repeat>
 

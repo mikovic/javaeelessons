@@ -88,19 +88,7 @@ public class TodoBean implements Serializable {
     public String showIndex() {
         return "/index.xhtml?faces-redirect=true";
     }
-    public String findToDos(Category category) throws SQLException {
-        logger.debug("categoryId= "+category.getId());
-       this.category = toDoRepository.findToDos(category);
-       logger.debug("CATEGORY=CATEGORY+CATEGORY!!!!!!!!!!!");
 
-        for(ToDo t: category.getList()){
-            logger.debug("id TODO TODO="+t.getId());
-            logger.debug("Category TODO="+t.getCategory());
-            logger.debug("DESCRIPTION= " + t.getDescription());
-            logger.debug(("___________________"));
-        }
-        return "/category.xhtml?faces-redirect=true";
-    }
 
     public Category getCategory() {
         return category;

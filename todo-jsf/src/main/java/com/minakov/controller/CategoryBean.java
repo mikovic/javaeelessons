@@ -1,20 +1,14 @@
 package com.minakov.controller;
-import com.minakov.persist.Catalog;
 import com.minakov.persist.Category;
 import com.minakov.persist.CategoryRepository;
-import com.minakov.persist.ToDo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import javax.enterprise.context.SessionScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
-import javax.servlet.ServletContext;
-import javax.servlet.http.HttpSession;
 import java.io.Serializable;
-import java.sql.Connection;
 import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.List;
 
 @SessionScoped
@@ -26,7 +20,7 @@ public class CategoryBean implements Serializable{
     private CategoryRepository categoryRepository;
 
     private Category category;
-    private Catalog catalog;
+    private List<Category> categories;
 
 
 
@@ -35,11 +29,11 @@ public class CategoryBean implements Serializable{
     public CategoryBean(){
 
     }
-    public Catalog getCatalog() throws SQLException {
+    public List<Category> findAll() throws SQLException {
 
-        this.catalog = categoryRepository.getCatalog();
+        this.categories = categoryRepository.findAll();
 
-        return catalog;
+        return categories;
 
     }
 
@@ -53,9 +47,7 @@ public class CategoryBean implements Serializable{
         this.category = category;
     }
 
-    public void setCatalog(Catalog catalog) {
-        this.catalog = catalog;
-    }
+
 
 
 }

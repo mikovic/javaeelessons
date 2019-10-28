@@ -1,19 +1,31 @@
 package com.minakov.persist;
 
 
+import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.inject.Inject;
 import java.time.LocalDate;
 
-public class ToDo {
 
+
+@Entity
+@Table(name = "todos")
+@NamedQuery(name = "from ToDo", query = "SELECT t FROM ToDo t")
+public class ToDo {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @NotNull(message = "Поле не должно быть пустым")
+    @Column
     private String description;
+    @NotNull(message = "Поле не должно быть пустым")
+    @Column
     private  int categoryId;
-    private String category;
+
+    @Column
     private LocalDate targetDate;
 
+    private String category;
     public ToDo() {
     }
 

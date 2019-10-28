@@ -1,13 +1,30 @@
 package com.minakov.persist;
 
+import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Category {
 
+@Entity
+@Table(name = "categories")
+@NamedQueries({
+        @NamedQuery(name = "Category.findAll", query = "SELECT c FROM Category c"),
+        @NamedQuery(name = "Category.findById", query = "select distinct c from Category c right join fetch c.todos t where c.id =:id")
+})
+
+public class Category {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
+
+    @NotNull(message = "Поле не должно быть пустым")
+    @Column
     private String category;
-    private List<ToDo> list = new ArrayList<>();
+    @Transient
+    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, orphanRemoval = true, mappedBy = "category")
+
+    private List<ToDo> toDos;
     public Category() {
     }
     public Category(int id, String category) {
@@ -31,14 +48,16 @@ public class Category {
         this.category = category;
     }
 
-    public List<ToDo> getList() {
-        return list;
+    public List<ToDo> getToDos() {
+        if(this.toDos == null){
+            toDos = new ArrayList<>();
+        }
+        return toDos;
     }
     public void addToDo(ToDo toDo){
-        this.list.add(toDo);
+        getToDos().add(toDo);
     }
 
-    public void setList(List<ToDo> list) {
-        this.list = list;
-    }
+
+
 }
