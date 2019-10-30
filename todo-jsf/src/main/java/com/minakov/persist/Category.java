@@ -2,6 +2,7 @@ package com.minakov.persist;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -13,7 +14,7 @@ import java.util.List;
         @NamedQuery(name = "Category.findById", query = "select distinct c from Category c right join fetch c.toDos t where c.id =:id")
 })
 
-public class Category {
+public class Category implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;

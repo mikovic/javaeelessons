@@ -23,6 +23,7 @@ http://xmlns.jcp.org/xml/ns/persistence/persistence_2_1.xsd"
             <property name="hibernate.dialect"
                       value="org.hibernate.dialect.MySQL57Dialect"/>
             <property name="hibernate.format_sql" value="true"/>
+
         </properties>
     </persistence-unit>
 </persistence>

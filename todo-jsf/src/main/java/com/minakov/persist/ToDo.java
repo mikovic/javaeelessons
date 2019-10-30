@@ -4,16 +4,15 @@ package com.minakov.persist;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.inject.Inject;
+import java.io.Serializable;
 import java.time.LocalDate;
 
 
 
 @Entity
 @Table(name = "todos")
-@NamedQueries({
-        @NamedQuery(name = "ToDo.findAll", query = "select distinct t from ToDo t left join fetch t.category c")
-})
-public class ToDo {
+
+public class ToDo implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
