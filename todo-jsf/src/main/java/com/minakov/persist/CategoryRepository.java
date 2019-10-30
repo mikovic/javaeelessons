@@ -26,10 +26,10 @@ public class CategoryRepository {
 
 
     public List<Category> findAll()  {
-        return em.createQuery("Category.findAll", Category.class).getResultList();
+        return em.createNamedQuery("Category.findAll", Category.class).getResultList();
     }
 
     public Category findById(int id) {
-        return em.createQuery("Category.findById", Category.class).setParameter("id", id).getSingleResult();
+        return em.createNamedQuery("Category.findById", Category.class).setParameter("id", id).getSingleResult();
     }
 }

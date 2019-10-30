@@ -8,10 +8,13 @@ import org.slf4j.LoggerFactory;
 import com.minakov.persist.ToDo;
 
 
+import javax.annotation.Resource;
 import javax.enterprise.context.SessionScoped;
+import javax.faces.event.ComponentSystemEvent;
 import javax.inject.Inject;
 import javax.inject.Named;
 import javax.servlet.http.HttpSession;
+import javax.transaction.UserTransaction;
 import java.io.Serializable;
 import java.sql.SQLException;
 import java.util.List;
@@ -26,10 +29,22 @@ public class TodoBean implements Serializable {
     @Inject
     private ToDoRepository toDoRepository;
 
+
     private ToDo toDo;
     private Basket basket;
     private Category category;
+    private List<ToDo> toDoList;
 
+    public void preloadTodoList(ComponentSystemEvent componentSystemEvent) {
+        logger.debug(("___________________!!!!!!!!!!!!!!____________________________"));
+        this.toDoList = toDoRepository.findAll();
+        for (ToDo t : this.toDoList) {
+            logger.debug("id TODO TODO=" + t.getId());
+            logger.debug("Category TODO=" + t.getCategory());
+            logger.debug("DESCRIPTION= " + t.getDescription());
+            logger.debug(("___________________!!!!!!!!!!!!!!____________________________"));
+        }
+    }
     public ToDo getToDo() {
         return toDo;
     }
@@ -45,7 +60,10 @@ public class TodoBean implements Serializable {
         this.toDo = toDo;
     }
 
-    public List<ToDo> getAllTodo() throws SQLException {
+    public List<ToDo> getAllTodo()  {
+        return toDoList;
+    }
+    public  List<ToDo> findAllToDo() {
         return toDoRepository.findAll();
     }
 

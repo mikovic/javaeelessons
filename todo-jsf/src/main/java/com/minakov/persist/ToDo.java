@@ -10,7 +10,9 @@ import java.time.LocalDate;
 
 @Entity
 @Table(name = "todos")
-@NamedQuery(name = "from ToDo", query = "SELECT t FROM ToDo t")
+@NamedQueries({
+        @NamedQuery(name = "ToDo.findAll", query = "select distinct t from ToDo t left join fetch t.category c")
+})
 public class ToDo {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

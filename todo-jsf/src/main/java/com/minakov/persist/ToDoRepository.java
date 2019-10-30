@@ -67,9 +67,8 @@ public class ToDoRepository {
 
 
     public List<ToDo> findAll() {
-        return em.createQuery("from ToDo", ToDo.class).getResultList();
+        return em.createNamedQuery("ToDo.findAll", ToDo.class).getResultList();
     }
-
 
 
     public void addToBasket(Long id) {

@@ -10,7 +10,7 @@ import java.util.List;
 @Table(name = "categories")
 @NamedQueries({
         @NamedQuery(name = "Category.findAll", query = "SELECT c FROM Category c"),
-        @NamedQuery(name = "Category.findById", query = "select distinct c from Category c right join fetch c.todos t where c.id =:id")
+        @NamedQuery(name = "Category.findById", query = "select distinct c from Category c right join fetch c.toDos t where c.id =:id")
 })
 
 public class Category {
@@ -21,9 +21,8 @@ public class Category {
     @NotNull(message = "Поле не должно быть пустым")
     @Column
     private String category;
-    @Transient
-    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, orphanRemoval = true, mappedBy = "category")
 
+    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, orphanRemoval = true, mappedBy = "category")
     private List<ToDo> toDos;
     public Category() {
     }

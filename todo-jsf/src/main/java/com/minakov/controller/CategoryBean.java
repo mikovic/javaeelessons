@@ -4,9 +4,11 @@ import com.minakov.persist.CategoryRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import javax.annotation.Resource;
 import javax.enterprise.context.SessionScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
+import javax.transaction.UserTransaction;
 import java.io.Serializable;
 import java.sql.SQLException;
 import java.util.List;
@@ -19,17 +21,14 @@ public class CategoryBean implements Serializable{
     @Inject
     private CategoryRepository categoryRepository;
 
+
     private Category category;
     private List<Category> categories;
-
-
-
-
 
     public CategoryBean(){
 
     }
-    public List<Category> findAll() throws SQLException {
+    public List<Category> getCategories(){
 
         this.categories = categoryRepository.findAll();
 
