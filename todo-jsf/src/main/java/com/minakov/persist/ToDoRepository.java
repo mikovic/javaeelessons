@@ -67,7 +67,7 @@ public class ToDoRepository {
 
 
     public List<ToDo> findAll() {
-        return em.createQuery("select distinct t from ToDo t left join fetch t.category c").getResultList();
+        return em.createQuery("select distinct t from ToDo t").getResultList();
     }
 
 
