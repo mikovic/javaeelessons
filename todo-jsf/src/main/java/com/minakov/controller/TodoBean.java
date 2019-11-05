@@ -1,5 +1,6 @@
 package com.minakov.controller;
 
+import com.minakov.UserService;
 import com.minakov.persist.Basket;
 import com.minakov.persist.Category;
 import com.minakov.persist.ToDoRepository;
@@ -9,6 +10,7 @@ import com.minakov.persist.ToDo;
 
 
 import javax.annotation.Resource;
+import javax.ejb.EJB;
 import javax.enterprise.context.SessionScoped;
 import javax.faces.event.ComponentSystemEvent;
 import javax.inject.Inject;
@@ -28,7 +30,8 @@ public class TodoBean implements Serializable {
 
     @Inject
     private ToDoRepository toDoRepository;
-
+    @EJB(lookup = "java:global/users/UserServiceImpl!com.minakov.UserService")
+    private UserService userService;
 
     private ToDo toDo;
     private Basket basket;
@@ -38,12 +41,7 @@ public class TodoBean implements Serializable {
     public void preloadTodoList(ComponentSystemEvent componentSystemEvent) {
         logger.debug(("___________________!!!!!!!!!!!!!!____________________________"));
         this.toDoList = toDoRepository.findAll();
-        for (ToDo t : this.toDoList) {
-            logger.debug("id TODO TODO=" + t.getId());
-            logger.debug("Category TODO=" + t.getCategory());
-            logger.debug("DESCRIPTION= " + t.getDescription());
-            logger.debug(("___________________!!!!!!!!!!!!!!____________________________"));
-        }
+        userService.findAll().forEach(u -> logger.info(u.getUsername()));
     }
     public ToDo getToDo() {
         return toDo;

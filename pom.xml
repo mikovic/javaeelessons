@@ -12,6 +12,9 @@
         <module>webapp</module>
         <module>todo</module>
         <module>todo-jsf</module>
+        <module>ejb-client</module>
+        <module>users-api</module>
+        <module>users-impl</module>
     </modules>
 
 
