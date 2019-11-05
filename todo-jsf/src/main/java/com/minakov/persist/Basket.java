@@ -1,10 +1,14 @@
 package com.minakov.persist;
 
 
+import javax.ejb.Stateful;
+import javax.enterprise.context.SessionScoped;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
-
-public class Basket {
+@SessionScoped
+@Stateful
+public class Basket implements Serializable {
     private List<ToDo> list = new ArrayList<>();
 
     public List <ToDo> getList() {

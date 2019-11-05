@@ -16,7 +16,7 @@
 </h:head>
 
 <h:body>
-    <f:event listener="${toDoBean.preloadTodoList()}" type="preRenderView" />
+
     <h:form >
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
         <a class="navbar-brand" href="#">ToDo</a>
@@ -39,7 +39,7 @@
 
                         <ui:repeat var="category" value="#{categoryBean.categories}">
 
-                            <h:commandLink class="dropdown-item" action="#{categoryBean.findById(category.id)}" value ="#{category.category}"/>
+                            <h:commandLink class="dropdown-item" action="#{todoBean.findToDos(category)}" value ="#{category.category}"/>
 
                         </ui:repeat>
 
@@ -59,7 +59,7 @@
                 </div>
 
                 <div class="col-12">
-                    <h:dataTable value="#{todoBean.allTodo()}" var="todo"
+                    <h:dataTable value="#{todoBean.findAllToDo()}" var="todo"
                                  styleClass="table table-bordered my-2">
 
                         <h:column>

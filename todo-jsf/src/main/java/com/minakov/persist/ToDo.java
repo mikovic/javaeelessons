@@ -11,6 +11,7 @@ import java.time.LocalDate;
 
 @Entity
 @Table(name = "todos")
+  @NamedQuery(name = "Todos.findByCategoryId", query = "select distinct t from ToDo t where t.categoryId =:categoryId")
 
 public class ToDo implements Serializable {
     @Id

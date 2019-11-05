@@ -78,7 +78,9 @@ public class ToDoRepository implements Serializable {
     public void addToBasket(Long id) {
 
     }
-
+    public  List<ToDo> findByCategoryId(int categoryId) {
+        return em.createNamedQuery("Todos.findByCategoryId", ToDo.class).setParameter("categoryId", categoryId).getResultList();
+    }
 
 }
 

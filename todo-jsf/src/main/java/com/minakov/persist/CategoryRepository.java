@@ -4,6 +4,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import javax.annotation.PostConstruct;
+import javax.ejb.Stateless;
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -15,8 +16,8 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
-@ApplicationScoped
-@Named
+
+@Stateless
 public class CategoryRepository {
 
     private static final Logger logger = LoggerFactory.getLogger(CategoryRepository.class);
@@ -29,7 +30,10 @@ public class CategoryRepository {
         return em.createNamedQuery("Category.findAll", Category.class).getResultList();
     }
 
-    public Category findById(int id) {
-        return em.createNamedQuery("Category.findById", Category.class).setParameter("id", id).getSingleResult();
+    public Category findById(long id) {
+        return em.createNamedQuery("Category.findById", Category.class).setParameter("id", id)
+                .getSingleResult();
     }
+
+
 }

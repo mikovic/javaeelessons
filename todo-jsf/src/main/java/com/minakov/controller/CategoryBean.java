@@ -1,6 +1,8 @@
 package com.minakov.controller;
 import com.minakov.persist.Category;
 import com.minakov.persist.CategoryRepository;
+import com.minakov.service.CategoryService;
+import com.minakov.service.CategoryServiceImpl;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -19,7 +21,7 @@ public class CategoryBean implements Serializable{
     private static final Logger logger = LoggerFactory.getLogger(TodoBean.class);
 
     @Inject
-    private CategoryRepository categoryRepository;
+    private CategoryService categoryService;
 
 
     private Category category;
@@ -30,13 +32,16 @@ public class CategoryBean implements Serializable{
     }
     public List<Category> getCategories(){
 
-        this.categories = categoryRepository.findAll();
+        this.categories = categoryService.findAll();
 
         return categories;
 
     }
 
-
+    public String findById(int id) {
+        this.category = categoryService.findById(id);
+        return "/category.xhtml?faces-redirect=true";
+    }
 
     public Category getCategory() {
         return category;
