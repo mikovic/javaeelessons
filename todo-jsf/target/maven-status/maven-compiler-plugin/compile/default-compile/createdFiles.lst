@@ -1,0 +1,9 @@
+com\minakov\controller\TodoBean.class
+com\minakov\persist\Category.class
+com\minakov\persist\Message.class
+com\minakov\controller\CategoryBean.class
+com\minakov\persist\CategoryRepository.class
+com\minakov\persist\Basket.class
+com\minakov\persist\ToDoRepository.class
+com\minakov\controller\MessageBean.class
+com\minakov\persist\ToDo.class
