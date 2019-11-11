@@ -33,9 +33,11 @@
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Catalog</a>
                     <div class="dropdown-menu">
-                            <ui:repeat var="category" value="#{categoryBean.categories}">
-                                <h:commandLink class="dropdown-item" action="#{categoryBean.findById(category.id)}" value ="#{category.category}"/>
-                            </ui:repeat>
+                        <ui:repeat var="category" value="#{categoryBean.categories}">
+                            <h:commandLink class="dropdown-item" action="#{todoBean.findToDos(category)}" value ="#{category.category}"/>
+
+                        </ui:repeat>
+
                     </div>
                 </li>
             </ul>
