@@ -10,7 +10,6 @@
     <modelVersion>4.0.0</modelVersion>
 
     <artifactId>ws-client</artifactId>
-
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <maven.compiler.source>1.8</maven.compiler.source>
@@ -31,6 +30,7 @@
                         <configuration>
                             <wsdlUrls>
                                 <wsdlUrl>http://localhost:8080/todo-jsf/ToDoService/ToDoService?WSDL</wsdlUrl>
+                                <wsdlUrl>http://localhost:8080/todo-jsf/CategoryService/CategoryService?WSDL</wsdlUrl>
                             </wsdlUrls>
                         </configuration>
                     </execution>
@@ -38,4 +38,5 @@
             </plugin>
         </plugins>
     </build>
+
 </project>

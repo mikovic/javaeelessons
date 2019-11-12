@@ -34,6 +34,8 @@ public class CategoryRepository {
         return em.createNamedQuery("Category.findById", Category.class).setParameter("id", id)
                 .getSingleResult();
     }
-
+    public void insert(Category category) {
+        em.persist(category);
+    }
 
 }
