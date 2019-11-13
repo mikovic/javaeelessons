@@ -8,6 +8,7 @@ com\minakov\persist\Basket.class
 com\minakov\service\TodoServiceImpl.class
 com\minakov\servicejax\CategoryServiceWs.class
 com\minakov\restservice\ToDoServiceRest.class
+com\minakov\servicejax\CategoryRepr.class
 com\minakov\controller\TodoBean.class
 com\minakov\servicejax\CategoryService.class
 com\minakov\servicejax\ToDoRepr.class

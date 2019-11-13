@@ -10,9 +10,9 @@ import java.util.List;
 public interface CategoryServiceWs {
 
     @WebMethod
-    List<Category> findAll();
+    List<CategoryRepr> findAll();
 
     @WebMethod
-    void insert(Category category);
+    void insert(CategoryRepr categoryRepr);
 
 }
