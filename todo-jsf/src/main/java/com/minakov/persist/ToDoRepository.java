@@ -66,6 +66,7 @@ public class ToDoRepository implements Serializable {
 
     public ToDo findById(long id) {
         return em.find(ToDo.class, id);
+
     }
 
 
@@ -81,7 +82,9 @@ public class ToDoRepository implements Serializable {
     public  List<ToDo> findByCategoryId(int categoryId) {
         return em.createNamedQuery("Todos.findByCategoryId", ToDo.class).setParameter("categoryId", categoryId).getResultList();
     }
-
+    public List<ToDo> findByName(String description) {
+        return em.createQuery("select distinct t from ToDo t where t.description =:description").getResultList();
+    }
 }
 
 

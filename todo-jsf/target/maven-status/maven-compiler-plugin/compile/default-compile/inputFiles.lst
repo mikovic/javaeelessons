@@ -1,4 +1,7 @@
+C:\Projects\javaeelessons\todo-jsf\src\main\java\com\minakov\restservice\RestAplication.java
+C:\Projects\javaeelessons\todo-jsf\src\main\java\com\minakov\restservice\ToDoServiceRestImpl.java
 C:\Projects\javaeelessons\todo-jsf\src\main\java\com\minakov\servicejax\ToDoServiceWs.java
+C:\Projects\javaeelessons\todo-jsf\src\main\java\com\minakov\servicejax\CategoryServiceWs.java
 C:\Projects\javaeelessons\todo-jsf\src\main\java\com\minakov\controller\TodoBean.java
 C:\Projects\javaeelessons\todo-jsf\src\main\java\com\minakov\controller\CategoryBean.java
 C:\Projects\javaeelessons\todo-jsf\src\main\java\com\minakov\service\TodoServiceImpl.java
@@ -6,11 +9,14 @@ C:\Projects\javaeelessons\todo-jsf\src\main\java\com\minakov\persist\ToDoReposit
 C:\Projects\javaeelessons\todo-jsf\src\main\java\com\minakov\interceptor\LoggerInterceptor.java
 C:\Projects\javaeelessons\todo-jsf\src\main\java\com\minakov\service\CategoryServiceImpl.java
 C:\Projects\javaeelessons\todo-jsf\src\main\java\com\minakov\service\TodoService.java
+C:\Projects\javaeelessons\todo-jsf\src\main\java\com\minakov\servicejax\CategoryService.java
 C:\Projects\javaeelessons\todo-jsf\src\main\java\com\minakov\persist\ToDo.java
 C:\Projects\javaeelessons\todo-jsf\src\main\java\com\minakov\persist\Category.java
+C:\Projects\javaeelessons\todo-jsf\src\main\java\com\minakov\servicejax\CategoryRepr.java
 C:\Projects\javaeelessons\todo-jsf\src\main\java\com\minakov\controller\MessageBean.java
 C:\Projects\javaeelessons\todo-jsf\src\main\java\com\minakov\persist\Basket.java
 C:\Projects\javaeelessons\todo-jsf\src\main\java\com\minakov\persist\CategoryRepository.java
+C:\Projects\javaeelessons\todo-jsf\src\main\java\com\minakov\restservice\ToDoServiceRest.java
 C:\Projects\javaeelessons\todo-jsf\src\main\java\com\minakov\servicejax\ToDoService.java
 C:\Projects\javaeelessons\todo-jsf\src\main\java\com\minakov\persist\Message.java
 C:\Projects\javaeelessons\todo-jsf\src\main\java\com\minakov\servicejax\ToDoRepr.java

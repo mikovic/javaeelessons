@@ -21,6 +21,7 @@ public class ToDo implements Serializable {
     @Column
     private String description;
     @NotNull(message = "Поле не должно быть пустым")
+
     @Column
     private  int categoryId;
 
@@ -76,5 +77,16 @@ public class ToDo implements Serializable {
 
     public void setCategory(String category) {
         this.category = category;
+    }
+
+    @ManyToOne(optional = false)
+    private Category categories;
+
+    public Category getCategories() {
+        return categories;
+    }
+
+    public void setCategories(Category categories) {
+        this.categories = categories;
     }
 }

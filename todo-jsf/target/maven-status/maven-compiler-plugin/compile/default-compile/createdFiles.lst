@@ -1,10 +1,16 @@
 com\minakov\service\TodoService.class
 com\minakov\persist\Message.class
 com\minakov\servicejax\ToDoService.class
+com\minakov\restservice\ToDoServiceRestImpl.class
 com\minakov\persist\CategoryRepository.class
+com\minakov\restservice\RestAplication.class
 com\minakov\persist\Basket.class
 com\minakov\service\TodoServiceImpl.class
+com\minakov\servicejax\CategoryServiceWs.class
+com\minakov\restservice\ToDoServiceRest.class
+com\minakov\servicejax\CategoryRepr.class
 com\minakov\controller\TodoBean.class
+com\minakov\servicejax\CategoryService.class
 com\minakov\servicejax\ToDoRepr.class
 com\minakov\persist\Category.class
 com\minakov\controller\CategoryBean.class
